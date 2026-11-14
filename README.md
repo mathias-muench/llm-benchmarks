@@ -182,6 +182,25 @@ Raw data: `results/bench-2026-11-14-unsloth-Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.
 | Qwen2.5-Coder-7B Q4_K_M | `-c 8192 -ngl 28` (≈4.7 GB, full GPU; trim if OOM)     | simple-coding slot                          |
 | Qwen3-14B Q4_K_M        | `-c 8192 -ngl 12` (batch only)                         | ~1.7–2 t/s; `-c 16384` variant ~1.3–1.5 t/s |
 
+### Infrastructure models (stable ports, not benchmarked here)
+
+**Embeddings — bge-m3, CPU, port 8081:**
+
+```powershell
+llama serve -hf CompendiumLabs/bge-m3-gguf:F16 --parallel 1 -lv 4 -t 12 -c 1024 --embeddings --pooling cls --fit off -ngl 0 -b 1024 -ub 1024 --port 8081
+```
+
+No `query:`/`passage:` prefix needed (unlike e5). `-b` must be ≥ max input length.
+
+**Reranker — bge-reranker-v2-m3, CPU, port 8082:**
+
+```powershell
+llama serve -hf gpustack/bge-reranker-v2-m3-GGUF:Q8_0 --parallel 1 -lv 4 -t 12 -c 2048 --embedding --pooling rank --rerank --fit off -ngl 0 -b 1024 -ub 1024 --port 8082
+```
+
+`POST /v1/rerank` with `{query, documents, top_n}` → Jina-style
+`results[{index, relevance_score}]`; scores are raw logits (less negative = more relevant).
+
 ---
 
 ## 6. Extending this document
