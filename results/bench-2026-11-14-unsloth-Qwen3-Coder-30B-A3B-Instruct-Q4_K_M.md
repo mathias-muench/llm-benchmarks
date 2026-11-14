@@ -1,7 +1,7 @@
 # Bench: Qwen3-Coder-30B-A3B-Instruct Q4_K_M on Quadro P1000 — 2026-11-14
 
 Build 11669 (0.7.0-dev 620d2225c), CUDA backend, Xeon E-2176M `-t 12`, P1000 4095 MiB.
-Fixed: `-t 12`, `--parallel 1`, port 8080. Raw runs: `bench-30b-a3b-2026-11-14.jsonl`.
+Fixed: `-t 12`, `--parallel 1`, port 8080. Raw runs: `bench-2026-11-14-unsloth-Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.jsonl`.
 All runs `--offline`, `-o jsonl`, `--no-warmup`; pp/tg in t/s (avg of reps).
 
 ## Winner
